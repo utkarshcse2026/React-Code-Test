@@ -153,6 +153,7 @@ const edit = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { username, password } = req.body;
+        console.log(username, password);
         // Find the user by username
         const user = await User.findOne({ username, deleted: false }).populate({
             path: 'roles'
