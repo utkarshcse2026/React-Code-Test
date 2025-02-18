@@ -26,6 +26,7 @@ const Index = () => {
     const [searchboxOutside, setSearchboxOutside] = useState('');
     const user = JSON.parse(localStorage.getItem("user"));
     const [deleteMany, setDeleteMany] = useState(false);
+    
     const [isLoding, setIsLoding] = useState(false);
     const [data, setData] = useState([]);
     const [displaySearchData, setDisplaySearchData] = useState(false);
@@ -101,6 +102,8 @@ const Index = () => {
                     setAction((pre) => !pre)
                 }
             }
+
+
             let response = await deleteManyApi('api/meeting/deleteMany', ids)
             if (response.status === 200) {
                 setSelectedValues([])

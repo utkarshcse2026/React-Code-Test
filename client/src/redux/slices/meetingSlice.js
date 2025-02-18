@@ -7,7 +7,7 @@ export const fetchMeetingData = createAsyncThunk('fetchMeetingData', async () =>
         console.log(user._id)
         console.log(user.role)
         const response = await getApi(user.role === 'superAdmin' ? 'api/meeting/list' : `api/meeting/:createBy=${user._id}`);
-                return response;
+        return response;
     } catch (error) {
         throw error;
     }

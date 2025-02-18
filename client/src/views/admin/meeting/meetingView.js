@@ -28,6 +28,8 @@ const MeetingView = (props) => {
         }
     }
 
+    
+
     useEffect(() => {
         fetchViewData()
     }, [action, info])

@@ -13,7 +13,8 @@ import { MeetingSchema } from 'schema';
 import { getApi, postApi } from 'services/api';
 
 const AddMeeting = (props) => {
-const { onClose, isOpen, setAction, from, view } = props    const [leaddata, setLeadData] = useState([])
+    const { onClose, isOpen, setAction, from, view } = props
+    const [leaddata, setLeadData] = useState([])
     const [contactdata, setContactData] = useState([])
     const [isLoding, setIsLoding] = useState(false)
     const [contactModelOpen, setContactModel] = useState(false);
@@ -47,9 +48,8 @@ const { onClose, isOpen, setAction, from, view } = props    const [leaddata, set
     });
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
-    const AddData = async () => 
-        {
-            setIsLoding(true)
+    const AddData = async () => {
+        setIsLoding(true)
         let data = {
             ...values,
             attendes: values.related === "Contact" ? values.attendes : values.related === "Lead" && values.attendesLead
@@ -79,7 +79,6 @@ const { onClose, isOpen, setAction, from, view } = props    const [leaddata, set
             setLeadData(lead?.data)
         }
         setIsLoding(false)
-
         
     }
 
@@ -216,8 +215,9 @@ const { onClose, isOpen, setAction, from, view } = props    const [leaddata, set
 
                 </ModalBody>
                 <ModalFooter>
-                <Button size="sm" variant='brand' me={2} disabled={isLoding ? true : false} onClick={AddData}>{isLoding ? <Spinner /> : 'Save'}</Button>                    <Button sx={{
-                        textTransform: "capitalize",
+                    <Button size="sm" variant='brand' me={2} disabled={isLoding ? true : false} onClick={AddData}>{isLoding ? <Spinner /> : 'Save'}</Button>
+                    <Button sx={{
+                        textTransform: "capitalize",    
                     }} variant="outline"
                         colorScheme="red" size="sm" onClick={() => {
                             formik.resetForm()
