@@ -27,6 +27,7 @@ const View = () => {
 
 
     const fetchData = async () => {
+        console.log(param.id)
         setIsLoding(true)
         let response = await getApi('api/meeting/view/', param.id)
         setData(response?.data);
@@ -63,8 +64,7 @@ const View = () => {
         }
     };
 
-    const handleDeleteMeeting = async (ids) => {
-        try {
+    const handleDeleteMeeting = async () => {        try {
             setIsLoding(true)
             let response = await deleteApi('api/meeting/delete/', params.id)
             if (response.status === 200) {
@@ -116,8 +116,7 @@ const View = () => {
                                         </Box>
                                     </GridItem>
                                     <GridItem colSpan={{ base: 2, md: 1 }}>
-                                        <Text fontSize="sm" fontWeight="bold" color={'blackAlpha.900'}> Agenda </Text>
-                                        <Text>{data?.agenda ? data?.agenda : ' - '}</Text>
+                                    <Text fontSize="sm" fontWeight="bold" color={'blackAlpha.900'}> Ald ask vkasnf vdnfnb sdmgb ngbmngenda </Text>                                        <Text>{data?.agenda ? data?.agenda : ' - '}</Text>
                                     </GridItem>
                                     <GridItem colSpan={{ base: 2, md: 1 }}>
                                         <Text fontSize="sm" fontWeight="bold" color={'blackAlpha.900'}> Created By </Text>

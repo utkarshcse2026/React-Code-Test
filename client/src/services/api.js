@@ -2,10 +2,10 @@ import axios from "axios"
 import { constant } from "../constant"
 
 
+const baseUrl = constant.baseUrl
 export const postApi = async (path, data, login) => {
     try {
-        let result = await axios.post(constant.baseUrl + path, data, {
-            headers: {
+        let result = await axios.post(baseUrl + path, data, {            headers: {
                 Authorization: localStorage.getItem("token") || sessionStorage.getItem("token")
             }
         })
@@ -15,8 +15,7 @@ export const postApi = async (path, data, login) => {
             } else {
                 sessionStorage.setItem('token', result.data?.token)
             }
-            localStorage.setItem('user', JSON.stringify(result.data?.user))
-        }
+            localStorage.setItem('user', JSON.stringify(result.data?.user))        }
         return result
     } catch (e) {
         console.error(e)
@@ -39,8 +38,8 @@ export const putApi = async (path, data, id) => {
 
 export const deleteApi = async (path, param) => {
     try {
-        let result = await axios.delete(constant.baseUrl + path + param, {
-            headers: {
+        console.log(baseUrl + path + param)
+        let result = await axios.put(baseUrl + path + param, {            headers: {
                 Authorization: localStorage.getItem("token") || sessionStorage.getItem("token")
             }
         })
@@ -56,8 +55,7 @@ export const deleteApi = async (path, param) => {
 
 export const deleteManyApi = async (path, data) => {
     try {
-        let result = await axios.post(constant.baseUrl + path, data, {
-            headers: {
+        let result = await axios.post( baseUrl+path,data, {            headers: {
                 Authorization: localStorage.getItem("token") || sessionStorage.getItem("token")
             }
         })
@@ -74,8 +72,7 @@ export const deleteManyApi = async (path, data) => {
 export const getApi = async (path, id) => {
     try {
         if (id) {
-            let result = await axios.get(constant.baseUrl + path + id, {
-                headers: {
+            let result = await axios.get(baseUrl+path + id, {                headers: {
                     Authorization: localStorage.getItem("token") || sessionStorage.getItem("token")
                 }
             })

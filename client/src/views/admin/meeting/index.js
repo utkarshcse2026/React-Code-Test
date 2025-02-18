@@ -10,7 +10,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import MeetingAdvanceSearch from './components/MeetingAdvanceSearch';
 import AddMeeting from './components/Addmeeting';
 import CommonDeleteModel from 'components/commonDeleteModel';
-import { deleteManyApi } from 'services/api';
+import { deleteManyApi, deleteApi } from 'services/api';
 import { toast } from 'react-toastify';
 import { fetchMeetingData } from '../../../redux/slices/meetingSlice';
 import { useDispatch } from 'react-redux';
@@ -91,6 +91,16 @@ const Index = () => {
     const handleDeleteMeeting = async (ids) => {
         try {
             setIsLoding(true)
+            if (deleteMany.length === 0) {
+                toast.error("Please select at least one record", { autoClose: 2000 })
+                return  
+            } else if (deleteMany.length === 1) {
+                let response = await deleteApi('api/meeting/delete/' + ids[0])
+                if (response.status === 200) {
+                    setSelectedValues([])
+                    setAction((pre) => !pre)
+                }
+            }
             let response = await deleteManyApi('api/meeting/deleteMany', ids)
             if (response.status === 200) {
                 setSelectedValues([])

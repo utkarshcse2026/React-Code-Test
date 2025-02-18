@@ -13,8 +13,7 @@ import { MeetingSchema } from 'schema';
 import { getApi, postApi } from 'services/api';
 
 const AddMeeting = (props) => {
-    const { onClose, isOpen, setAction, from, fetchData, view } = props
-    const [leaddata, setLeadData] = useState([])
+const { onClose, isOpen, setAction, from, view } = props    const [leaddata, setLeadData] = useState([])
     const [contactdata, setContactData] = useState([])
     const [isLoding, setIsLoding] = useState(false)
     const [contactModelOpen, setContactModel] = useState(false);
@@ -48,15 +47,44 @@ const AddMeeting = (props) => {
     });
     const { errors, touched, values, handleBlur, handleChange, handleSubmit, setFieldValue } = formik
 
-    const AddData = async () => {
+    const AddData = async () => 
+        {
+            setIsLoding(true)
+        let data = {
+            ...values,
+            attendes: values.related === "Contact" ? values.attendes : values.related === "Lead" && values.attendesLead
+        }
+        let result = await postApi('api/meeting/add', data);
+        if (result.status === 201) {
+            toast.success(result?.data?.message)
+            setIsLoding(false)
+            fetchAllData()
+            onClose()
+            setAction(true)
+        } else {
+            toast.error(result?.data?.message)
+            setIsLoding(false)
+        }
 
     };
 
     const fetchAllData = async () => {
+        setIsLoding(true)
+        let contact = await getApi('api/contact/index')
+        let lead = await getApi('api/lead/index')
+        if (contact.status === 200) {
+            setContactData(contact?.data)
+        }
+        if (lead.status === 200) {
+            setLeadData(lead?.data)
+        }
+        setIsLoding(false)
+
         
     }
 
     useEffect(() => {
+        fetchAllData()
 
     }, [props.id, values.related])
 
@@ -188,8 +216,7 @@ const AddMeeting = (props) => {
 
                 </ModalBody>
                 <ModalFooter>
-                    <Button size="sm" variant='brand' me={2} disabled={isLoding ? true : false} onClick={handleSubmit}>{isLoding ? <Spinner /> : 'Save'}</Button>
-                    <Button sx={{
+                <Button size="sm" variant='brand' me={2} disabled={isLoding ? true : false} onClick={AddData}>{isLoding ? <Spinner /> : 'Save'}</Button>                    <Button sx={{
                         textTransform: "capitalize",
                     }} variant="outline"
                         colorScheme="red" size="sm" onClick={() => {
